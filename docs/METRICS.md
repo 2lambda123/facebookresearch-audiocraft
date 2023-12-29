@@ -16,9 +16,9 @@ We provide an implementation of the Scale-Invariant Signal-to-Noise Ratio in PyT
 No specific requirement is needed for this metric. Please activate the metric at the
 evaluation stage with the appropriate flag:
 
-**Warning:** We report the opposite of the SI-SNR, e.g. multiplied by -1. This is due to internal 
-    details where the SI-SNR score can also be used as a training loss function, where lower
-    values should indicate better reconstruction. Negative values are such expected and a good sign! Those should be again multiplied by `-1` before publication :)
+**Warning:** We report the opposite of the SI-SNR, e.g. multiplied by -1. This is due to internal
+details where the SI-SNR score can also be used as a training loss function, where lower
+values should indicate better reconstruction. Negative values are such expected and a good sign! Those should be again multiplied by `-1` before publication :)
 
 ```shell
 dora run <...> evaluate.metrics.sisnr=true
@@ -71,6 +71,7 @@ of the labels obtained by a state-of-the-art audio classifier. We provide our im
 using the [PaSST classifier](https://github.com/kkoutini/PaSST).
 
 In order to use the KLD metric over PaSST, you must install the PaSST library as an extra dependency:
+
 ```shell
 pip install 'git+https://github.com/kkoutini/passt_hear21@0.0.19#egg=hear21passt'
 ```
@@ -91,6 +92,7 @@ More specifically, we provide a PyTorch implementation of a Text consistency met
 relying on a pre-trained [Contrastive Language-Audio Pretraining (CLAP)](https://github.com/LAION-AI/CLAP).
 
 Please install the CLAP library as an extra dependency prior to using the metric:
+
 ```shell
 pip install laion_clap
 ```
@@ -123,9 +125,11 @@ fed in EnCodec instead of the generated sample using the flag `<metric>.use_gt=t
 ## Example usage
 
 You will find example of configuration for the different metrics introduced above in:
-* The [musicgen's default solver](../config/solver/musicgen/default.yaml) for all audio generation metrics
-* The [compression's default solver](../config/solver/compression/default.yaml) for all audio synthesis metrics
+
+- The [musicgen's default solver](../config/solver/musicgen/default.yaml) for all audio generation metrics
+- The [compression's default solver](../config/solver/compression/default.yaml) for all audio synthesis metrics
 
 Similarly, we provide different examples in our grids:
-* [Evaluation with ViSQOL](../audiocraft/grids/compression/encodec_musicgen_32khz.py)
-* [Evaluation with FAD and others](../audiocraft/grids/musicgen/musicgen_pretrained_32khz_eval.py)
+
+- [Evaluation with ViSQOL](../audiocraft/grids/compression/encodec_musicgen_32khz.py)
+- [Evaluation with FAD and others](../audiocraft/grids/musicgen/musicgen_pretrained_32khz_eval.py)
