@@ -85,7 +85,8 @@ class SISNR(nn.Module):
         self.overlap = overlap
         self.epsilon = epsilon
 
-    def forward(self, out_sig: torch.Tensor, ref_sig: torch.Tensor) -> torch.Tensor:
+    def forward(self, out_sig: torch.Tensor,
+                ref_sig: torch.Tensor) -> torch.Tensor:
         """
 
         :param out_sig: torch.Tensor:
@@ -116,7 +117,6 @@ class SISNR(nn.Module):
         proj = dot[:, :, :, None] * gt / (epsilon + _norm2(gt))
         noise = est - proj
 
-        sisnr = 10 * (
-            torch.log10(epsilon + _norm2(proj)) - torch.log10(epsilon + _norm2(noise))
-        )
+        sisnr = 10 * (torch.log10(epsilon + _norm2(proj)) -
+                      torch.log10(epsilon + _norm2(noise)))
         return -1 * sisnr[..., 0].mean()
