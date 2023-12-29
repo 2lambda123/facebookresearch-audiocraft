@@ -17,6 +17,11 @@ def _unfold(a: torch.Tensor, kernel_size: int, stride: int) -> torch.Tensor:
     with K the kernel size, by extracting frames with the given stride.
     This will pad the input so that `F = ceil(T / K)`.
     see https://github.com/pytorch/pytorch/issues/60466
+
+    :param a: torch.Tensor: 
+    :param kernel_size: int: 
+    :param stride: int: 
+
     """
     *shape, length = a.shape
     n_frames = math.ceil(length / stride)
@@ -29,29 +34,43 @@ def _unfold(a: torch.Tensor, kernel_size: int, stride: int) -> torch.Tensor:
 
 
 def _center(x: torch.Tensor) -> torch.Tensor:
+    """
+
+    :param x: torch.Tensor: 
+
+    """
     return x - x.mean(-1, True)
 
 
 def _norm2(x: torch.Tensor) -> torch.Tensor:
+    """
+
+    :param x: torch.Tensor: 
+
+    """
     return x.pow(2).sum(-1, True)
 
 
 class SISNR(nn.Module):
     """SISNR loss.
-
+    
     Input should be [B, C, T], output is scalar.
-
+    
     ..Warning:: This function returns the opposite of the SI-SNR (e.g. `-1 * regular_SI_SNR`).
         Consequently, lower scores are better in terms of reconstruction quality,
         in particular, it should be negative if training goes well. This done this way so
         that this module can also be used as a loss function for training model.
 
-    Args:
-        sample_rate (int): Sample rate.
-        segment (float or None): Evaluate on chunks of that many seconds. If None, evaluate on
+    :param sample_rate: Sample rate.
+    :type sample_rate: int
+    :param segment: Evaluate on chunks of that many seconds. If None, evaluate on
             entire audio only.
-        overlap (float): Overlap between chunks, i.e. 0.5 = 50 % overlap.
-        epsilon (float): Epsilon value for numerical stability.
+    :type segment: float or None
+    :param overlap: Overlap between chunks, i.e. 0.5 = 50 % overlap.
+    :type overlap: float
+    :param epsilon: Epsilon value for numerical stability.
+    :type epsilon: float
+
     """
 
     def __init__(
@@ -68,6 +87,12 @@ class SISNR(nn.Module):
         self.epsilon = epsilon
 
     def forward(self, out_sig: torch.Tensor, ref_sig: torch.Tensor) -> torch.Tensor:
+        """
+
+        :param out_sig: torch.Tensor: 
+        :param ref_sig: torch.Tensor: 
+
+        """
         B, C, T = ref_sig.shape
         assert ref_sig.shape == out_sig.shape
 
