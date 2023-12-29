@@ -17,9 +17,9 @@ def _unfold(a: torch.Tensor, kernel_size: int, stride: int) -> torch.Tensor:
     This will pad the input so that `F = ceil(T / K)`.
     see https://github.com/pytorch/pytorch/issues/60466
 
-    :param a: torch.Tensor: 
-    :param kernel_size: int: 
-    :param stride: int: 
+    :param a: torch.Tensor:
+    :param kernel_size: int:
+    :param stride: int:
 
     """
     *shape, length = a.shape
@@ -35,7 +35,7 @@ def _unfold(a: torch.Tensor, kernel_size: int, stride: int) -> torch.Tensor:
 def _center(x: torch.Tensor) -> torch.Tensor:
     """
 
-    :param x: torch.Tensor: 
+    :param x: torch.Tensor:
 
     """
     return x - x.mean(-1, True)
@@ -44,7 +44,7 @@ def _center(x: torch.Tensor) -> torch.Tensor:
 def _norm2(x: torch.Tensor) -> torch.Tensor:
     """
 
-    :param x: torch.Tensor: 
+    :param x: torch.Tensor:
 
     """
     return x.pow(2).sum(-1, True)
@@ -52,9 +52,9 @@ def _norm2(x: torch.Tensor) -> torch.Tensor:
 
 class SISNR(nn.Module):
     """SISNR loss.
-    
+
     Input should be [B, C, T], output is scalar.
-    
+
     ..Warning:: This function returns the opposite of the SI-SNR (e.g. `-1 * regular_SI_SNR`).
         Consequently, lower scores are better in terms of reconstruction quality,
         in particular, it should be negative if training goes well. This done this way so
@@ -88,8 +88,8 @@ class SISNR(nn.Module):
     def forward(self, out_sig: torch.Tensor, ref_sig: torch.Tensor) -> torch.Tensor:
         """
 
-        :param out_sig: torch.Tensor: 
-        :param ref_sig: torch.Tensor: 
+        :param out_sig: torch.Tensor:
+        :param ref_sig: torch.Tensor:
 
         """
         B, C, T = ref_sig.shape
